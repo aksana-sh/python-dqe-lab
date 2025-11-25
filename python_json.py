@@ -43,25 +43,34 @@ class JSONNewsImporter:
             if "news" in record_type:
                 text = normalize_letter_case(block.get("text", ""))
                 city = block.get("city", "").title()
-                result = self.publisher.create_news(text, city)
+                result, db_record = self.publisher.create_news(text, city)
+                if db_record:
+                    self.publisher.db_saver.db_insert_news(*db_record)
+
 
             elif "private ad" in record_type:
                 text = normalize_letter_case(block.get("text", ""))
                 expiration = block.get("expiration", "")
-                result = self.publisher.create_private_ad(text, expiration)
+                result, db_record = self.publisher.create_private_ad(text, expiration)
 
                 if "Invalid" in result or "cannot be earlier" in result:
                     print(result)
                     continue
 
+                if db_record:
+                    self.publisher.db_saver.db_insert_private_ad(*db_record)
+
             elif "horoscope" in record_type:
                 sign = block.get("sign", "")
                 message = normalize_letter_case(block.get("message", ""))
-                result = self.publisher.create_horoscope(sign, message)
+                result, db_record = self.publisher.create_horoscope(sign, message)
 
                 if "Invalid zodiac sign" in result:
                     print(result)
                     continue
+
+                if db_record:
+                    self.publisher.db_saver.db_insert_horoscope(*db_record)
 
             else:
                 print(f"Unknown record type: {record_type}")

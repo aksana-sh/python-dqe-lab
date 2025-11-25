@@ -1,14 +1,14 @@
 <records>
     <record type="News">
-        <text>New eco-friendly cafe opens downtown, serving plant-based meals and zero-waste coffee.</text>
+        <text>Test DB - New eco-friendly cafe opens downtown, serving plant-based meals and zero-waste coffee.</text>
         <city>Minsk</city>
     </record>
     <record type="Private Ad">
-        <text>Looking to buy a used mountain bike in good condition.</text>
+        <text>Test DB - Looking to buy a used mountain bike in good condition.</text>
         <expiration>2025-12-15</expiration>
     </record>
     <record type="Horoscope">
         <sign>Leo</sign>
-        <message>Your curiosity leads to a meaningful connection—stay open to new ideas.</message>
+        <message>Test DB - Your curiosity leads to a meaningful connection—stay open to new ideas.</message>
     </record>
 </records>

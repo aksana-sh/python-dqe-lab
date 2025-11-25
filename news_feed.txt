@@ -55,3 +55,46 @@ Sign: Leo
 Your curiosity leads to a meaningful connection—stay open to new ideas.
 Date: 2025-11-10
 
+NEWS -----
+Test user input for News.
+Minsk, 2025-11-25 17:57
+
+NEWS -----
+Test db - a san francisco dog wags its tail and kisses rescuers after it’s plucked from the side of a cliff!
+San Francisco, 2025-11-25 18:12
+
+PRIVATE AD -----
+Test db - test looking for a python tutor.
+Actual until: 2025-12-31, 35 days left
+
+HOROSCOPE -----
+Sign: Leo
+Test db - today is your lucky day!
+Date: 2025-11-25
+
+NEWS -----
+Test db - last month's jewellery heist at the louvre museum was carried out by petty criminals rather than organised crime professionals, paris's prosecutor has said.
+Paris, 2025-11-25 18:18
+
+PRIVATE AD -----
+Test db - room for rent in city center. Fully furnished, utilities included.
+Actual until: 2025-11-30, 4 days left
+
+HOROSCOPE -----
+Sign: Leo
+Test db - you will shine today!
+Date: 2025-11-25
+
+NEWS -----
+Test db - new eco-friendly cafe opens downtown, serving plant-based meals and zero-waste coffee.
+Minsk, 2025-11-25 18:23
+
+PRIVATE AD -----
+Test db - looking to buy a used mountain bike in good condition.
+Actual until: 2025-12-15, 19 days left
+
+HOROSCOPE -----
+Sign: Leo
+Test db - your curiosity leads to a meaningful connection—stay open to new ideas.
+Date: 2025-11-25
+

@@ -51,7 +51,9 @@ class FileNewsImporter:
                 text = normalize_letter_case(data.get("text", ""))
                 city = data.get("city", "").title()
                 # Create formatted news content for publishing
-                result = self.publisher.create_news(text, city)
+                result, db_record = self.publisher.create_news(text, city)
+                if db_record:
+                    self.publisher.db_saver.db_insert_news(*db_record)
 
             # Handle Private Ad record
             elif "private ad" in record_type:
@@ -59,12 +61,15 @@ class FileNewsImporter:
                 text = normalize_letter_case(data.get("text", ""))
                 expiration = data.get("expiration", "")
                 # Create formatted private ad content for publishing
-                result = self.publisher.create_private_ad(text, expiration)
+                result, db_record = self.publisher.create_private_ad(text, expiration)
 
                 # If the ad has an invalid or past expiration date, skip publishing
                 if "Invalid" in result or "cannot be earlier" in result:
                     print(result)
                     continue
+
+                if db_record:
+                    self.publisher.db_saver.db_insert_private_ad(*db_record)
 
             # Handle Horoscope record
             elif "horoscope" in record_type:
@@ -72,12 +77,15 @@ class FileNewsImporter:
                 sign = data.get("sign", "")
                 message = normalize_letter_case(data.get("message", ""))
                 # Create formatted private ad content for publishing
-                result = self.publisher.create_horoscope(sign, message)
+                result, db_record = self.publisher.create_horoscope(sign, message)
 
                 # If the zodiac sign is invalid, skip publishing
                 if "Invalid zodiac sign" in result:
                     print(result)
                     continue
+
+                if db_record:
+                    self.publisher.db_saver.db_insert_horoscope(*db_record)
 
             # Handle unknown record types
             else:

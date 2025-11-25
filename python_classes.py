@@ -10,6 +10,7 @@
 # 3.Your unique one with unique publish rules.
 
 import datetime
+from python_sql import DBNewsSaver
 
 
 class NewsFeedPublisher:
@@ -19,16 +20,18 @@ class NewsFeedPublisher:
         "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
     }
 
-    def __init__(self, news_file="news_feed.txt"):
+    def __init__(self, news_file="news_feed.txt", db_saver=None):
         # Initialize with a default output file to store news
         self.news_file = news_file
+        self.db_saver = db_saver or DBNewsSaver()
 
     def create_news(self, text: str, city: str) -> str:
         # Get current date and time in readable string format
         news_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         # Format the news content
         news_content = f"NEWS -----\n{text}\n{city}, {news_date}"
-        return news_content
+        db_values = (text, city, news_date)
+        return news_content, db_values
 
     def create_private_ad(self, text: str, expiration_date: str) -> str:
         try:
@@ -38,26 +41,28 @@ class NewsFeedPublisher:
 
             # Check if expiration date is in the past
             if exp_date.date() < today.date():
-                return "Expiration date cannot be earlier than today."
+                return "Expiration date cannot be earlier than today.", None
 
             # Calculate days left until expiration
             days_left = (exp_date - datetime.datetime.now()).days
             # Format the private ad content
             private_ad_content = f"PRIVATE AD -----\n{text}\nActual until: {expiration_date}, {days_left} days left"
-            return private_ad_content
+            db_values = (text, expiration_date, days_left)
+            return private_ad_content, db_values
         except ValueError:
             # Handle invalid date format
-            return "Invalid expiration date format. Use YYYY-MM-DD."
+            return "Invalid expiration date format. Use YYYY-MM-DD.", None
 
     def create_horoscope(self, sign: str, message: str) -> str:
         # Validate zodiac sign
         if sign.lower() not in self.ZODIAC_SIGNS:
-            return f"Invalid zodiac sign: '{sign}'. Please enter one of: {', '.join(self.ZODIAC_SIGNS)}"
+            return f"Invalid zodiac sign: '{sign}'. Please enter one of: {', '.join(self.ZODIAC_SIGNS)}", None
         # Get current date in readable string format
         date_str = datetime.datetime.now().strftime("%Y-%m-%d")
         # Format the horoscope content
         horoscope_content = f"HOROSCOPE -----\nSign: {sign.capitalize()}\n{message}\nDate: {date_str}"
-        return horoscope_content
+        db_values = (sign.capitalize(), message, date_str)
+        return horoscope_content, db_values
 
     def publish(self, content: str):
         # Append the formatted content to the file
@@ -81,29 +86,40 @@ class NewsFeedPublisher:
         if user_choice == "1":
             text = input("Enter news text: ")
             city = input("Enter city: ")
-            record = self.create_news(text, city)
+            record, db_record = self.create_news(text, city)
+            if db_record:
+                self.db_saver.db_insert_news(*db_record)
+                print(db_record)
 
         # Handle Private Ad entry
         elif user_choice == "2":
             text = input("Enter private ad text: ")
             expiration_date = input("Enter expiration date (YYYY-MM-DD): ")
-            record = self.create_private_ad(text, expiration_date)
+            record, db_record = self.create_private_ad(text, expiration_date)
 
             # Check for validation errors
             if "Invalid expiration date format" in record or "cannot be earlier" in record:
                 print(record)
                 return
 
+            if db_record:
+                self.db_saver.db_insert_private_ad(*db_record)
+                print(db_record)
+
         # Handle Horoscope entry
         elif user_choice == "3":
             sign = input("Enter your zodiac sign: ")
             message = input("Enter horoscope message: ")
-            record = self.create_horoscope(sign, message)
+            record, db_record = self.create_horoscope(sign, message)
 
             # Check for validation errors
             if "Invalid zodiac sign" in record:
                 print(record)
                 return
+
+            if db_record:
+                self.db_saver.db_insert_horoscope(*db_record)
+                print(db_record)
 
         # Handle invalid type user choice
         else:

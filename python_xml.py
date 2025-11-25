@@ -43,7 +43,9 @@ class XMLNewsImporter:
                 text = normalize_letter_case(record.findtext("text", ""))
                 city = record.findtext("city", "").title()
                 # Generate formatted news content
-                result = self.publisher.create_news(text, city)
+                result, db_record = self.publisher.create_news(text, city)
+                if db_record:
+                    self.publisher.db_saver.db_insert_news(*db_record)
 
             # Handle Private Ad
             elif "private ad" in record_type:
@@ -51,12 +53,15 @@ class XMLNewsImporter:
                 text = normalize_letter_case(record.findtext("text", ""))
                 expiration = record.findtext("expiration", "")
                 # Generate formatted private ad content
-                result = self.publisher.create_private_ad(text, expiration)
+                result, db_record = self.publisher.create_private_ad(text, expiration)
 
                 # Skip publishing if expiration is invalid or in the past
                 if "Invalid" in result or "cannot be earlier" in result:
                     print(result)
                     continue
+
+                if db_record:
+                    self.publisher.db_saver.db_insert_private_ad(*db_record)
 
             # Handle Horoscope
             elif "horoscope" in record_type:
@@ -64,12 +69,15 @@ class XMLNewsImporter:
                 sign = record.findtext("sign", "")
                 message = normalize_letter_case(record.findtext("message", ""))
                 # Generate formatted horoscope content
-                result = self.publisher.create_horoscope(sign, message)
+                result, db_record = self.publisher.create_horoscope(sign, message)
 
                 # Skip publishing if zodiac sign is invalid
                 if "Invalid zodiac sign" in result:
                     print(result)
                     continue
+
+                if db_record:
+                    self.publisher.db_saver.db_insert_horoscope(*db_record)
 
             # Handle unknown record types
             else:

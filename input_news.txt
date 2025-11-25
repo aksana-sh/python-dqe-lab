@@ -1,16 +1,16 @@
 
 
 Type: News
-Text: A San Francisco dog WAGS its tail and kisses rescuers after it’s plucked from the side of a cliff!
+Text: Test DB - A San Francisco dog WAGS its tail and kisses rescuers after it’s plucked from the side of a cliff!
 City: San Francisco
 
 Type: Private Ad
-Text: looking for a PYTHON tutor.
+Text: Test DB - Test looking for a PYTHON tutor.
 Expiration: 2025-12-31
 
 Type: Horoscope
 Sign: leo
-Message: Today Is Your Lucky Day!
+Message: Test DB - Today Is Your Lucky Day!
 
 Type: Tip of the day
 Message: TAKE ACTION!

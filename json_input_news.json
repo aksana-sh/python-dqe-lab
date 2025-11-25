@@ -1,18 +1,18 @@
  [
   {
     "type": "News",
-    "text": "Last month's jewellery heist at the louvre museum was carried out by petty criminals rather than organised crime professionals, paris's prosecutor has said.",
+    "text": "Test DB - Last month's jewellery heist at the louvre museum was carried out by petty criminals rather than organised crime professionals, paris's prosecutor has said.",
     "city": "Paris"
   },
   {
     "type": "Private Ad",
-    "text": "Room for rent in city center. Fully furnished, utilities included.",
+    "text": "Test DB - Room for rent in city center. Fully furnished, utilities included.",
     "expiration": "2025-11-30"
   },
   {
     "type": "Horoscope",
     "sign": "leo",
-    "message": "You will shine today!"
+    "message": "Test DB - You will shine today!"
   },
   {
     "type": "Tip of the day",
